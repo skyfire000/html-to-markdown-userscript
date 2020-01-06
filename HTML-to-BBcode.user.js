@@ -18,7 +18,7 @@ body.addEventListener("contextmenu", initMenu, false);
 
 var menu = body.appendChild(document.createElement("menu"));
 menu.outerHTML = '<menu id="userscript-html-to-markdown" type="context">\
-                    <menuitem label="Copy HTML to Markdown"></menuitem>\
+                    <menuitem label="Copy HTML to BBcode"></menuitem>\
                   </menu>';
 
 document.querySelector("#userscript-html-to-markdown menuitem")
@@ -45,6 +45,46 @@ function convertHTML(aEvent) {
   span = document.createElement('SPAN');
   span.appendChild(fragment);
   content = span.innerHTML;
-  var md = HTML2Markdown(content);
+  var md = HtmltoBB(content);
   GM_setClipboard(md, 'text');
+}
+
+function HtmltoBB(html) {
+
+	html = html.replace(/<br\s*[\/]?>/gi, "\n");
+	html = html.replace(/<b>/gi, "[b]");
+	html = html.replace(/<i>/gi, "[i]");
+	html = html.replace(/<u>/gi, "[u]");
+	html = html.replace(/<\/b>/gi, "[/b]");
+	html = html.replace(/<\/i>/gi, "[/i]");
+	html = html.replace(/<\/u>/gi, "[/u]");
+	html = html.replace(/<em>/gi, "[b]");
+	html = html.replace(/<\/em>/gi, "[/b]");
+	html = html.replace(/<strong>/gi, "[b]");
+	html = html.replace(/<\/strong>/gi, "[/b]");
+    html = html.replace(/<strike>/gi, "[s]");
+	html = html.replace(/<\/strike>/gi, "[/s]");
+    html = html.replace(/<sub>/gi, "[sub]");
+	html = html.replace(/<\/sub>/gi, "[/sub]");
+    html = html.replace(/<sup>/gi, "[sup]");
+	html = html.replace(/<\/sup>/gi, "[/sup]");
+    html = html.replace(/<hr>/gi, "-----");
+    //html = html.replace(/<div(.*?)style="text-align:(.*?)"(.*?)>([\s\S]*?)<\/div>?=*$/gmi, "[$2]$4[/$2]");
+	html = html.replace(/<div(.*?)style="(.*?)"(.*?)>/gi, "[center]");
+	html = html.replace(/<\/div>/gi, "[/center]");
+
+	html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/gi, "[img]$2[/img]");
+	html = html.replace(/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/gi, "[url=$2]$4[/url]");
+
+	html = html.replace(/\/\//gi, "/");	
+
+	html = html.replace(/<(?:[^>'"]*|(['"]).*?\1)*>/gmi, "");
+	html = html.replace(/\r\r/gi, ""); 
+	html = html.replace(/\[img]\//gi, "[img]");
+	html = html.replace(/\[url=\//gi, "[url=");
+
+	html = html.replace(/(\S)\n/gi, "$1 ");
+  html = html.replace(/\n\n/gi, "\n");
+
+	return html;
 }
