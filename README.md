@@ -1,6 +1,6 @@
-# HTML to Markdown Userscript
+# HTML to BBCode Userscript
 
-A Userscript to automatically convert selected HTML on a web page to Markdown format.
+A Userscript to automatically convert selected HTML on a web page to BBCode format.
 
 ## Requirements
 
@@ -13,5 +13,5 @@ A Userscript to automatically convert selected HTML on a web page to Markdown fo
 
 ## How to Use
 * Highlight the section of a web page you wish to copy.
-* Right-click, and select "Copy HTML to Markdown".
-* Paste the contents of your clipboard into your Markdown editor of choice.
+* Right-click, and select "Copy HTML to BBCode".
+* Paste the contents of your clipboard into your BBCode editor of choice.
